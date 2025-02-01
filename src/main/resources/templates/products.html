@@ -3,6 +3,14 @@
 <head>
   <title>Products</title>
   <link rel="stylesheet" href="/styles.css">
+  <script>
+    function addToCart(productId) {
+      fetch('/cart/add/' + productId, { method: 'POST' })
+        .then(response => response.json())
+        .then(data => alert(data.message))
+        .catch(error => console.error('Error:', error));
+    }
+  </script>
 </head>
 <body>
 <h1>Our Products</h1>
@@ -12,6 +20,7 @@
   <tr>
     <th>Name</th>
     <th>Price</th>
+    <th>Action</th>
   </tr>
   </thead>
   <tbody>
@@ -19,8 +28,12 @@
   <tr th:each="product : ${products}">
     <td th:text="${product.name}"></td>
     <td th:text="${product.price}"></td>
+    <td><button th:attr="onclick='addToCart(' + ${product.id} + ')'"></button>Add to Cart</td>
   </tr>
   </tbody>
 </table>
+
+<a href="/cart">View Cart</a>
+
 </body>
 </html>
